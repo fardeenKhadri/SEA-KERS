@@ -12,19 +12,20 @@
         body {
             background-color: black;
             color: #00FFFF;
+            font-family: Arial, sans-serif;
         }
-
+    
         /* Header Styles */
         .mdl-layout__header {
             background-color: black !important;
         }
-
+    
         .mdl-layout-title,
         p,
         #chatLog p {
             color: #00FFFF;
         }
-
+    
         /* Video Element */
         #videoElement {
             width: 480px;
@@ -32,12 +33,12 @@
             border-radius: 20px;
             border: 3px solid #00FFFF;
         }
-
+    
         /* Canvas Element */
         #canvasElement {
             display: none;
         }
-
+    
         /* Content Layout */
         .demo-content {
             padding: 20px;
@@ -45,22 +46,99 @@
             flex-direction: column;
             align-items: center;
         }
-
+    
         /* Button Group */
         .button-group {
             margin-bottom: 20px;
         }
-
+    
         /* Button Styling */
         .mdl-button {
             border: 2px solid #00FFFF;
         }
-
+    
         .mdl-button--colored {
             background-color: #00FFFF !important;
             color: black !important;
         }
+    
+        /* Toggle Switch Style */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+    
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+    
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            border-radius: 34px;
+            transition: 0.4s;
+        }
+    
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.4s;
+        }
+    
+        input:checked + .slider {
+            background-color: #00FFFF; /* Active Color */
+        }
+    
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+    
+        /* Chat Log Box */
+        #chatLog {
+            width: 80%;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 2px solid #00FFFF;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 10px;
+            text-align: left;
+        }
+    
+        /* Scrollbar Styling */
+        #chatLog::-webkit-scrollbar {
+            width: 8px;
+        }
+    
+        #chatLog::-webkit-scrollbar-thumb {
+            background-color: #00FFFF;
+            border-radius: 10px;
+        }
+    
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #videoElement {
+                width: 100%;
+                height: auto;
+            }
+        }
     </style>
+    
     
 </head>
 
@@ -81,14 +159,11 @@
                 <div class="demo-content">
                     <!-- Voice Control Buttons -->
                     <div class="button-group">
-                        <button id="startButton"
-                            class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
-                            <i class="material-icons">mic</i>
-                        </button>
-                        <button id="stopButton"
-                            class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
-                            <i class="material-icons">mic_off</i>
-                        </button>
+                        <label class ="switch">
+                            <input type="checkbox" id="toggleButton">
+                            <span class="slider"></span>
+                            <p id="toggleStatus" style="margin-top: 10px; color: #00FFFF; font-weight: bold;">Microphone OFF</p>
+                        </label>
                     </div>
 
                     <!-- Video Element -->
@@ -354,8 +429,20 @@
            div.appendChild(newParagraph);
         }
 
-        startButton.addEventListener('click', startAudioInput);
-        stopButton.addEventListener('click', stopAudioInput);
+        const toggleButton = document.getElementById('toggleButton');
+        const toggleStatus = document.getElementById('toggleStatus');
+
+        toggleButton.addEventListener('change', function () {
+            if (this.checked) {
+                console.log("Microphone ON");
+                toggleStatus.innerText = "Microphone ON";
+                startAudioInput(); // Start Function
+                } else {
+                console.log("Microphone OFF");
+                toggleStatus.innerText = "Microphone OFF";
+                stopAudioInput(); // Stop Function
+            }
+        });
 
 
         class Response {
