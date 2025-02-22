@@ -15,7 +15,6 @@ SPOOKY is an **AI-powered real-time assistant** that integrates **WebRTC, WebSoc
 │── index.html                # Main frontend UI (WebRTC, WebSocket, and UI elements)
 │── main.py                   # WebSocket server (Google Gemini integration)
 │── pcm-processor.js          # Web Audio API worklet for processing PCM data
-│── README.md                 # Project documentation
 ```
 
 ---
@@ -130,8 +129,3 @@ Contains:
 ✅ **Chat History & Voice Playback**  
 
 
-
----
-
-## **License**
-📜 **MIT License** - Free to use, modify, and distribute.  
